@@ -3,12 +3,14 @@ int elite_size = 1;
 int tournament_size = 2;
 float crossover_rate = 0.5;
 float mutation_rate = 0.4;
+float individual_mutation_rate = 0.4;
 int resolution = 256;
+int SuperFormulaNumber=10;
 
 Population pop;
 PVector[][] cells;
 Harmonograph hovered_indiv = null;
-
+/*
 void settings() {
   size(int(displayWidth * 0.9), int(displayHeight * 0.8), P2D);
   smooth(8);
@@ -132,4 +134,19 @@ PVector[][] calculateGrid(int cells, float x, float y, float w, float h, float m
     }
   }
   return positions;
+}
+*/
+
+SuperFormula sf;
+
+void setup() {
+  size(600, 600);
+  sf = new SuperFormula(100,100,100,22,22,20);
+  print(sf);
+}
+
+void draw() {
+  background(255);
+  PImage img = sf.getPhenotype(width);
+  image(img, 0, 0);
 }
