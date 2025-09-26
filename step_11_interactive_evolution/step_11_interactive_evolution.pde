@@ -1,23 +1,23 @@
-int population_size = 30;
-int elite_size = 1;
+int population_size = 10;
+int elite_size = 0;
 int tournament_size = 2;
 float crossover_rate = 0.5;
 float mutation_rate = 0.4;
-float individual_mutation_rate = 0.4;
+float individual_mutation_rate = 0.5;
 int resolution = 256;
-int SuperFormulaNumber=10;
+int SuperFormulaNumber=1;
 
-Population pop;
+PopuLationInd pop;
 PVector[][] cells;
-Harmonograph hovered_indiv = null;
-/*
+Individual hovered_indiv = null;
+
 void settings() {
   size(int(displayWidth * 0.9), int(displayHeight * 0.8), P2D);
   smooth(8);
 }
 
 void setup() {
-  pop = new Population();
+  pop = new PopuLationInd();
   cells = calculateGrid(population_size, 0, 0, width, height - 30, 30, 10, 30, true);
   textSize(constrain(cells[0][0].z * 0.15, 11, 14));
 }
@@ -73,17 +73,17 @@ void keyReleased() {
     pop.initialize();
   } else if (key == 'e') {
     // Export selected individual
-    if (hovered_indiv != null) {
-      hovered_indiv.export();
-    }
+    //if (hovered_indiv != null) {
+      //hovered_indiv.export();
+    //}
   } else {
     if (hovered_indiv != null) {
       // Change fitness of the selected (hovered) individual
-      float fit = hovered_indiv.getFitness();
+      int fit = hovered_indiv.getFitness();
       if (keyCode == UP) {
-        fit = min(fit + 0.1, 1);
+        fit = min(fit + 1, 10);
       } else if (keyCode == DOWN) {
-        fit = max(fit - 0.1, 0);
+        fit = max(fit - 1, 1);
       } else if (keyCode == RIGHT) {
         fit = 1;
       } else if (keyCode == LEFT) {
@@ -97,10 +97,10 @@ void keyReleased() {
 void mouseReleased() {
   // Set fitness of clicked individual to 1
   if (hovered_indiv != null) {
-    if (hovered_indiv.getFitness() < 1) {
-      hovered_indiv.setFitness(1);
+    if (hovered_indiv.getFitness() < 10) {
+      hovered_indiv.setFitness(10);
     } else {
-      hovered_indiv.setFitness(0);
+      hovered_indiv.setFitness(1);
     }
   }
 }
@@ -135,18 +135,27 @@ PVector[][] calculateGrid(int cells, float x, float y, float w, float h, float m
   }
   return positions;
 }
-*/
 
-SuperFormula sf;
+
+/*
+Individual ind;
 
 void setup() {
-  size(600, 600);
-  sf = new SuperFormula(100,100,100,22,22,20);
-  print(sf);
+    size(600, 600);
+    ind = new Individual();
+    background(255);
+    noLoop();
 }
 
 void draw() {
-  background(255);
-  PImage img = sf.getPhenotype(width);
-  image(img, 0, 0);
+    background(255);
+    ind.display(width/2, height/2); 
 }
+
+void keyReleased() {
+    if (keyCode == ENTER){
+            ind.mutate();
+            redraw();
+            println(ind);
+        }    
+}*/

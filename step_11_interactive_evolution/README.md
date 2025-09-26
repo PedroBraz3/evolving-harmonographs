@@ -26,4 +26,4 @@ Users can interact with the program using the following controls:
 - Change the code to generate each new generation using only the individuals evaluated by the user. See, for example, the original Interactive Genetic Algorithm presented by Karl Sims in [Interactive Evolution of Dynamical Systems](https://www.karlsims.com/papers/DynamicalSystemsECAL92.pdf) (1992).
 - Implement a hybrid approach that combines automatic and interactive evaluation.
 
-Problemas que passei com a superformula- Decidir o limite dos randoms e da mutação
+Problemas que passei com a superformula- Decidir o limite dos randoms e da mutação neste momento está.

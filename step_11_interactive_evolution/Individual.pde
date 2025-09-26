@@ -1,8 +1,7 @@
-
-
 class Individual {
     SuperFormula[] superformulas;
-    float fitness;
+    int fitness = 1;
+    PImage phenotype = null;
 
     Individual(){
          superformulas = new SuperFormula[SuperFormulaNumber];
@@ -20,7 +19,12 @@ class Individual {
     }
 
     Individual getCopy() {
-        Individual copy = new Individual(superformulas);
+        SuperFormula[] newSuperformulas = new SuperFormula[superformulas.length];
+        for (int i = 0; i < superformulas.length; i++) {
+            newSuperformulas[i] = superformulas[i].getCopy(); // cria uma cópia independente
+        }
+        Individual copy = new Individual(newSuperformulas);
+        copy.fitness = fitness;
         return copy;
     }
 
@@ -53,7 +57,82 @@ class Individual {
 
         return new Individual[]{child1, child2};
     }
-    
 
+    void mutate(){
+        if(random(1)<mutation_rate){
+            for (int i = 0; i < superformulas.length; i++) {
+                superformulas[i].mutate();
+            }
+        }
+    }
+
+    void display(float x, float y) {
+        // Cria um canvas temporário para a composição
+        PGraphics canvas = createGraphics(resolution, resolution);
+        canvas.beginDraw();
+        canvas.background(255);
+        canvas.stroke(0);
+        canvas.noFill();
+        canvas.strokeWeight(2);
+
+        // Desenha cada SuperFormula no mesmo canvas
+        canvas.pushMatrix();
+        canvas.translate(resolution/2, resolution/2);
+        for (int i = 0; i < superformulas.length; i++) {
+            superformulas[i].render(canvas, 0, 0, resolution, resolution);
+        }
+        canvas.popMatrix();
+        canvas.endDraw();
+
+        // Mostra o canvas na tela
+        imageMode(CENTER);
+        image(canvas, x, y);
+    }
+
+    int calculateFitness(){
+        return 1;
+    }
+
+    void setFitness(int fitness){
+        this.fitness=fitness;
+    }
+
+    int getFitness(){
+        return fitness;
+    }
+
+    PImage getPhenotype(int resolution) {
+        if (phenotype != null && phenotype.height == resolution) {
+            return phenotype;
+        }
+
+        PGraphics canvas = createGraphics(resolution, resolution);
+        canvas.beginDraw();
+        canvas.background(255);
+        canvas.noFill();
+        canvas.stroke(0);
+        canvas.strokeWeight(resolution * 0.002);
+
+        canvas.pushMatrix();
+        canvas.translate(resolution/2, resolution/2);
+        for (int i = 0; i < superformulas.length; i++) {
+            superformulas[i].render(canvas, 0, 0, resolution, resolution);
+        }
+        canvas.popMatrix();
+
+        canvas.endDraw();
+
+        phenotype = canvas.get(); 
+        return phenotype;
+    }
+    
+    String toString(){
+        String ind = "";
+        for (int i = 0; i < superformulas.length; i++) {
+            ind += superformulas[i].toString() + "\n";
+        }
+        return ind;
+    }
+    
 
 }
