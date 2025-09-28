@@ -33,15 +33,16 @@ class SuperFormula {
     n2 = random(0.5, 10.0);
     n3 = random(0.5, 10.0);
     m = int(random(0, 50));
-    offsetX = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
-    offsetY = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
+    //offsetX = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
+    //offsetY = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
     phenotype = null;
   }
-
+  /*
   void mutate(){
     randomize();
-  }
-  /*
+    phenotype = null;
+  }*/
+  
   float maybeMutate(float value, float percent, boolean plus, float mutationRate, float min, float max) {
       if (random(1) < mutationRate) {
         if(plus){
@@ -65,6 +66,7 @@ class SuperFormula {
     if (random(1) < individual_mutation_rate) {
       m = int(random(1, 50));
     }
+    /*
     if (random(1) < individual_mutation_rate) {
       int step = (random(1) < 0.5) ? -10 : 10;
       offsetX += step;
@@ -74,9 +76,9 @@ class SuperFormula {
       int step = (random(1) < 0.5) ? -10 : 10;
       offsetY += step;
       offsetY = constrain(offsetY, int(-resolution/2 *0.8), int(resolution/2*0.8));
-    }
+    }*/
     phenotype = null;
-  }*/
+  }
 
   // Get the phenotype (image)
   PImage getPhenotype(int resolution) {
@@ -127,8 +129,6 @@ class SuperFormula {
         copy.n1 = this.n1;
         copy.n2 = this.n2;
         copy.n3 = this.n3;
-        copy.offsetX = this.offsetX;
-        copy.offsetY = this.offsetY;
         // copie todos os outros parâmetros
         return copy;
     }

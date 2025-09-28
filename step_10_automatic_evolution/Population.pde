@@ -1,4 +1,4 @@
-import java.util.*; // Needed to sort arrays
+/*import java.util.*; // Needed to sort arrays
 
 // This class stores and manages a population of individuals (harmonographs).
 class Population {
@@ -120,4 +120,4 @@ class Population {
   int getGenerations() {
     return generations;
   }
-}
+}*/

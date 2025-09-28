@@ -5,9 +5,11 @@ class PopulationInd {
   
   Individual[] individuals; // Array to store the individuals in the population
   int generations; // Integer to keep count of how many generations have been created
+  Evaluator evaluator;
   
-  PopulationInd() {
+  PopulationInd(PImage target) {
     individuals = new Individual[population_size];
+    evaluator = new Evaluator(target, resolution);
     initialize();
   }
   
@@ -16,10 +18,13 @@ class PopulationInd {
     // Fill population with random individuals
     for (int i = 0; i < individuals.length; i++) {
       individuals[i] = new Individual();
+      float fitness = evaluator.calculateFitness(individuals[i])*9+1;
+      individuals[i].setFitness(fitness);
     }
     
     // Reset generations counter
     generations = 0;
+    sortIndividualsByFitness();
   }
   
   // Create the next generation
@@ -42,11 +47,11 @@ class PopulationInd {
     for (int i = eliteSizeAdjusted; i < population_size; i += 2) {
       Individual[] newIndivs;
       if (random(1) < crossover_rate) {
-        Individual parent1 = selectByRoulette();
-        Individual parent2 = selectByRoulette();
+        Individual parent1 = tournamentSelectionV2();
+        Individual parent2 = tournamentSelectionV2();
         newIndivs = parent1.OnePointFlexibleCrossover(parent2);
       } else {
-        newIndivs = new Individual[]{selectByRoulette().getCopy(), selectByRoulette().getCopy()};
+        newIndivs = new Individual[]{tournamentSelectionV2().getCopy(), selectByRoulette().getCopy()};
       }
       new_generation[i] = newIndivs[0];
       if (i + 1 < population_size) {
@@ -64,11 +69,11 @@ class PopulationInd {
       individuals[i] = new_generation[i];
     }
     
-    // Reset the fitness of all individuals to 0, excluding elite
-    for (int i = 0; i < individuals.length; i++) {
-       individuals[i].setFitness(1);
+    for (int i = eliteSizeAdjusted; i < new_generation.length; i++) {
+      float fitness = evaluator.calculateFitness(new_generation[i])*9+1;
+      new_generation[i].setFitness(fitness);
     }
-    
+    sortIndividualsByFitness();
     // Increment the number of generations
     generations++;
   }
@@ -91,16 +96,13 @@ class PopulationInd {
         return individuals[individuals.length-1];
     }
   
-  /**
-   * Return one individual selected using tournament.
-   *
-  Harmonograph tournamentSelectionV2() {
+  Individual tournamentSelectionV2() {
     // Define pool of individuals from which one will be selected by tournament
-    Harmonograph[] selectionPool;
-    ArrayList<Harmonograph> prefferedIndividuals = getPreferredIndivsShuffled();
+    Individual[] selectionPool;
+    ArrayList<Individual> prefferedIndividuals = getPreferredIndivsShuffled();
     if (prefferedIndividuals.size() > 1) {
       Collections.shuffle(prefferedIndividuals);
-      selectionPool = prefferedIndividuals.toArray(new Harmonograph[0]);
+      selectionPool = prefferedIndividuals.toArray(new Individual[0]);
     } else if (prefferedIndividuals.size() == 1) {
       return prefferedIndividuals.get(0);
     } else {
@@ -108,14 +110,14 @@ class PopulationInd {
     }
     
     // Select a set of individuals at random
-    Harmonograph[] tournament = new Harmonograph[tournament_size];
+    Individual[] tournament = new Individual[tournament_size];
     for (int i = 0; i < tournament.length; i++) {
       int randomIndex = int(random(0, selectionPool.length));
       tournament[i] = selectionPool[randomIndex];
     }
 
     // Return the fittest individual from the selected ones
-    Harmonograph fittest = tournament[0];
+    Individual fittest = tournament[0];
     for (int i = 1; i < tournament.length; i++) {
       if (tournament[i].getFitness() > fittest.getFitness()) {
         fittest = tournament[i];
@@ -123,7 +125,7 @@ class PopulationInd {
     }
     return fittest;
   }
-    */
+
   /*
   // Select one individual using a tournament selection 
   Harmonograph tournamentSelection() {

@@ -1,12 +1,16 @@
-int population_size = 100;
-int elite_size = 1;
-int tournament_size = 3;
-float crossover_rate = 0.7;
-float mutation_rate = 0.05;
-int resolution = 128;
-String path_target_image = "glyphs_1693591751539/A.png";
+int population_size = 50;
+int elite_size = 0;
+int tournament_size = 2;
+float crossover_rate = 0.5;
+float mutation_rate = 0.2;
+float individual_mutation_rate = 1;
+int resolution = 256;
+int SuperFormulaNumber=2;
+int max_generations = 2000;
 
-Population pop;
+String path_target_image = "superformulas/2025-09-28-13-18-25.png";
+
+PopulationInd pop;
 PVector[][] cells;
 boolean phenotype_mode = true;
 boolean show_fitness = true;
@@ -17,14 +21,23 @@ void settings() {
 }
 
 void setup() {
-  pop = new Population();
+  int centerX = (displayWidth - width) / 2;
+  int centerY = (displayHeight - height) / 2;
+  surface.setLocation(centerX, centerY);
+  PImage target = loadImage(path_target_image);
+  pop = new PopulationInd(target);
   cells = calculateGrid(population_size, 0, 0, width, height, 30, 10, 30, true);
   textSize(constrain(cells[0][0].z * 0.15, 11, 14));
   textAlign(CENTER, TOP);
 }
 
 void draw() {
-  pop.evolve();
+  if (pop.getGenerations() < max_generations) {
+    pop.evolve();
+    println("Current generation: " + pop.getGenerations());
+  } else {
+    println("Max generations reached: " + pop.getGenerations());
+  }
   println("Current generation: " + pop.getGenerations());
   background(phenotype_mode ? 235 : 0);
   float cell_dim = cells[0][0].z;

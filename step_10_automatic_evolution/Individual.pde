@@ -2,11 +2,11 @@ import processing.pdf.*;
 
 class Individual {
     SuperFormula[] superformulas;
-    int fitness = 1;
+    float fitness = 0;
     PImage phenotype = null;
 
     Individual(){
-         superformulas = new SuperFormula[SuperFormulaNumber];
+        superformulas  = new SuperFormula[SuperFormulaNumber];
          inicializar();
     }
 
@@ -95,11 +95,11 @@ class Individual {
         return 1;
     }
 
-    void setFitness(int fitness){
+    void setFitness(float fitness){
         this.fitness=fitness;
     }
 
-    int getFitness(){
+    float getFitness(){
         return fitness;
     }
 
@@ -136,6 +136,28 @@ class Individual {
         return ind;
     }
     
+    void renderPoints(PGraphics canvas, float cx, float cy, float w, float h) {
+  canvas.pushMatrix();
+  canvas.pushStyle();
+
+  // move o sistema de coordenadas para o centro pedido
+  canvas.translate(cx, cy);
+
+  // podes ajustar strokeWeight aqui para que os pontos fiquem proporcionais
+  float sw = max(1, w * 0.01);
+  canvas.strokeWeight(sw);
+  canvas.stroke(0);
+  canvas.noFill();
+
+  // delega para cada superformula
+  for (int i = 0; i < superformulas.length; i++) {
+    superformulas[i].renderPoints(canvas, 0, 0, w, h);
+  }
+
+  canvas.popStyle();
+  canvas.popMatrix();
+}
+
     void export() {
     // cria o nome único (ano-mês-dia-hora-minuto-segundo)
     String output_filename = year() + "-" + nf(month(), 2) + "-" + nf(day(), 2) + "-" +

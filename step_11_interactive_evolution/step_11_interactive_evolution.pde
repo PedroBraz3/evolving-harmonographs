@@ -5,9 +5,9 @@ float crossover_rate = 0.5;
 float mutation_rate = 0.4;
 float individual_mutation_rate = 0.5;
 int resolution = 256;
-int SuperFormulaNumber=3;
+int SuperFormulaNumber=1;
 
-PopuLationInd pop;
+PopulationInd pop;
 PVector[][] cells;
 Individual hovered_indiv = null;
 
@@ -17,9 +17,13 @@ void settings() {
 }
 
 void setup() {
-  pop = new PopuLationInd();
+  pop = new PopulationInd();
   cells = calculateGrid(population_size, 0, 0, width, height - 30, 30, 10, 30, true);
   textSize(constrain(cells[0][0].z * 0.15, 11, 14));
+  surface.setLocation(
+    (displayWidth - width) / 2, 
+    (displayHeight - height) / 2
+  );
 }
 
 void draw() {
@@ -73,9 +77,9 @@ void keyReleased() {
     pop.initialize();
   } else if (key == 'e') {
     // Export selected individual
-    //if (hovered_indiv != null) {
-      //hovered_indiv.export();
-    //}
+    if (hovered_indiv != null) {
+    hovered_indiv.export();
+    }
   } else {
     if (hovered_indiv != null) {
       // Change fitness of the selected (hovered) individual
