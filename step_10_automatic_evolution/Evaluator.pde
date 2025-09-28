@@ -5,42 +5,9 @@ class Evaluator {
   int[] target_binary;
   float[] target_weight; // peso para cada pixel baseado na intensidade
 
-  PImage extractEdges(PImage mask) {
-    PImage eroded = mask.copy();
-    eroded.filter(ERODE);
-
-    PImage edges = createImage(mask.width, mask.height, RGB);
-    edges.loadPixels();
-    mask.loadPixels();
-    eroded.loadPixels();
-
-    for (int i = 0; i < mask.pixels.length; i++) {
-      // borda = máscara original - erodida
-      if (brightness(mask.pixels[i]) != brightness(eroded.pixels[i])) {
-        edges.pixels[i] = color(0);   // borda preta
-      } else {
-        edges.pixels[i] = color(255); // fundo branco
-      }
-    }
-
-    edges.updatePixels();
-    return edges;
-  }
-
-  PImage preprocessEdges(PImage img, int resolution) {
-    PImage processed = img.copy();
-    processed.resize(resolution, resolution);
-    processed.filter(GRAY);
-    processed.filter(THRESHOLD, 0.8); // binariza
-    processed.filter(DILATE);
-    processed.filter(ERODE);          // limpa ruído
-    return extractEdges(processed);   // pega só as bordas
-  }
-
   Evaluator(PImage image, int resolution) {
     // Prepara a imagem alvo
-
-    target_image = preprocessEdges(image.copy(),resolution);
+    target_image = image.copy();
     target_image.resize(resolution, resolution);
     target_pixels_brightness = getPixelsBrightness(target_image);
     target_weight = getPixelWeights(target_image);
