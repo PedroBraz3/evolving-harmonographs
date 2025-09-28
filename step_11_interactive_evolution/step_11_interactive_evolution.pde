@@ -5,7 +5,7 @@ float crossover_rate = 0.5;
 float mutation_rate = 0.4;
 float individual_mutation_rate = 0.5;
 int resolution = 256;
-int SuperFormulaNumber=1;
+int SuperFormulaNumber=3;
 
 PopuLationInd pop;
 PVector[][] cells;
