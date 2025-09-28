@@ -47,11 +47,11 @@ class PopulationInd {
     for (int i = eliteSizeAdjusted; i < population_size; i += 2) {
       Individual[] newIndivs;
       if (random(1) < crossover_rate) {
-        Individual parent1 = tournamentSelectionV2();
-        Individual parent2 = tournamentSelectionV2();
+        Individual parent1 = selectByRoulette();
+        Individual parent2 = selectByRoulette();
         newIndivs = parent1.OnePointFlexibleCrossover(parent2);
       } else {
-        newIndivs = new Individual[]{tournamentSelectionV2().getCopy(), selectByRoulette().getCopy()};
+        newIndivs = new Individual[]{selectByRoulette().getCopy(), selectByRoulette().getCopy()};
       }
       new_generation[i] = newIndivs[0];
       if (i + 1 < population_size) {

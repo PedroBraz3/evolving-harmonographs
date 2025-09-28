@@ -1,4 +1,4 @@
-int population_size = 100;
+int population_size = 50;
 int elite_size = 0;
 int tournament_size = 2;
 float crossover_rate = 0.5;
@@ -29,6 +29,11 @@ void setup() {
   cells = calculateGrid(population_size, 0, 0, width, height, 30, 10, 30, true);
   textSize(constrain(cells[0][0].z * 0.15, 11, 14));
   textAlign(CENTER, TOP);
+  /*
+  Individual teste = new Individual(new SuperFormula[]{new SuperFormula(11.840047, 17.885777, 9.935061,1.0129713,4.9151177,24.0),new SuperFormula(12.140578,19.416162,8.545664,4.6335735,5.5556393,28.0)});
+  Evaluator evaluator = new Evaluator(target, resolution);
+  println(evaluator.calculateFitness(teste));
+  */
 }
 
 void draw() {

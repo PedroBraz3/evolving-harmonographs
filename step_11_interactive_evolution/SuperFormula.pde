@@ -37,11 +37,11 @@ class SuperFormula {
     //offsetY = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
     phenotype = null;
   }
-
+  /*
   void mutate(){
     randomize();
-  }
-  /*
+  }*/
+  
   float maybeMutate(float value, float percent, boolean plus, float mutationRate, float min, float max) {
       if (random(1) < mutationRate) {
         if(plus){
@@ -55,7 +55,7 @@ class SuperFormula {
   }  
 
   //Para resolver este talvez seja boa ideia fazer o inverso do valor (Quanto mais pequeno maior a
-  alteração).
+  //alteração).
   // Mutation operator
   void mutate() {
     a = maybeMutate(a, 0.25,random(1) < 0.5, individual_mutation_rate, 0.5, 20.0);
@@ -66,6 +66,7 @@ class SuperFormula {
     if (random(1) < individual_mutation_rate) {
       m = int(random(1, 50));
     }
+    /*
     if (random(1) < individual_mutation_rate) {
       int step = (random(1) < 0.5) ? -10 : 10;
       offsetX += step;
@@ -75,9 +76,9 @@ class SuperFormula {
       int step = (random(1) < 0.5) ? -10 : 10;
       offsetY += step;
       offsetY = constrain(offsetY, int(-resolution/2 *0.8), int(resolution/2*0.8));
-    }
+    }*/
     phenotype = null;
-  }*/
+  }
 
   // Get the phenotype (image)
   PImage getPhenotype(int resolution) {
