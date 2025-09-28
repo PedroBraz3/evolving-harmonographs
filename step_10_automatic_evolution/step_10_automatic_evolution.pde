@@ -1,9 +1,9 @@
-int population_size = 50;
+int population_size = 100;
 int elite_size = 0;
 int tournament_size = 2;
 float crossover_rate = 0.5;
-float mutation_rate = 0.2;
-float individual_mutation_rate = 1;
+float mutation_rate = 0.3;
+float individual_mutation_rate = 0.8;
 int resolution = 256;
 int SuperFormulaNumber=2;
 int max_generations = 2000;

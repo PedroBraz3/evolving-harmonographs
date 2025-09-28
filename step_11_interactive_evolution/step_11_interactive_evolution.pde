@@ -2,10 +2,10 @@ int population_size = 10;
 int elite_size = 0;
 int tournament_size = 2;
 float crossover_rate = 0.5;
-float mutation_rate = 0.4;
+float mutation_rate = 0.3;
 float individual_mutation_rate = 0.5;
 int resolution = 256;
-int SuperFormulaNumber=1;
+int SuperFormulaNumber=2;
 
 PopulationInd pop;
 PVector[][] cells;

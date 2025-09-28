@@ -33,8 +33,8 @@ class SuperFormula {
     n2 = random(0.5, 10.0);
     n3 = random(0.5, 10.0);
     m = int(random(0, 50));
-    offsetX = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
-    offsetY = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
+    //offsetX = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
+    //offsetY = int(random(-resolution/2 * 0.8, resolution/2 * 0.8));
     phenotype = null;
   }
 
@@ -54,7 +54,8 @@ class SuperFormula {
       }
   }  
 
-
+  //Para resolver este talvez seja boa ideia fazer o inverso do valor (Quanto mais pequeno maior a
+  alteração).
   // Mutation operator
   void mutate() {
     a = maybeMutate(a, 0.25,random(1) < 0.5, individual_mutation_rate, 0.5, 20.0);
@@ -95,7 +96,7 @@ class SuperFormula {
     return canvas;
   }
 
-  // Draw the harmonograph line on a given canvas, at a given position and with a given size
+  // Draw the superformula line on a given canvas, at a given position and with a given size
   void render(PGraphics canvas, float x, float y, float w, float h) {
       calculatePoints(w, h);
       canvas.pushMatrix();
@@ -108,7 +109,7 @@ class SuperFormula {
       canvas.popMatrix();
   }
 
-  // Draw the harmonograph points on a given canvas, at a given position and with a given size
+  // Draw the superformula points on a given canvas, at a given position and with a given size
   void renderPoints(PGraphics canvas, float x, float y, float w, float h) {
     calculatePoints(w, h);
     canvas.pushMatrix();
@@ -189,29 +190,4 @@ void calculatePoints(float w, float h) {
   String toString(){
     return "a-" + a + "\n" + "b-" + b + "\n" + "n1-" + n1 + " n2-" + n2 + " n3-" + n3 + "\nm-" + m;
   }
-
- /* // Export image (png), vector (pdf) and genes (txt) of this harmonograph
-  void export() {
-    String output_filename = year() + "-" + nf(month(), 2) + "-" + nf(day(), 2) + "-" +
-      nf(hour(), 2) + "-" + nf(minute(), 2) + "-" + nf(second(), 2);
-    String output_path = sketchPath("outputs/" + output_filename);
-    println("Exporting harmonograph to: " + output_path);
-
-    getPhenotype(2000).save(output_path + ".png");
-
-    PGraphics pdf = createGraphics(500, 500, PDF, output_path + ".pdf");
-    pdf.beginDraw();
-    pdf.noFill();
-    pdf.strokeWeight(pdf.height * 0.001);
-    pdf.stroke(0);
-    render(pdf, pdf.width / 2, pdf.height / 2, pdf.width, pdf.height);
-    pdf.dispose();
-    pdf.endDraw();
-
-    String[] output_text_lines = new String[genes.length];
-    for (int i = 0; i < genes.length; i++) {
-      output_text_lines[i] = str(genes[i]);
-    }
-    saveStrings(output_path + ".txt", output_text_lines);
-  }*/
 }

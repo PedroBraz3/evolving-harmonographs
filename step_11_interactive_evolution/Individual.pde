@@ -34,7 +34,8 @@ class Individual {
     Individual[] OnePointFlexibleCrossover(Individual partner) {
         Individual child1 = getCopy();
         Individual child2 = partner.getCopy();
-        
+        println(child1);
+        println(child2);
         int numGenes = child1.superformulas.length;
         
         // Escolhe um ponto de corte aleatório (pode ser 0 ou o último)
@@ -56,7 +57,8 @@ class Individual {
                 child2.superformulas[i] = temp;
             }
         }
-
+        println(child1);
+        println(child2);
         return new Individual[]{child1, child2};
     }
 
