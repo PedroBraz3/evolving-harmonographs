@@ -11,7 +11,7 @@ class Evaluator {
     target_image.resize(resolution, resolution);
     target_pixels_brightness = getPixelsBrightness(target_image);
     target_weight = getPixelWeights(target_image);
-    target_binary = toBinary(target_image, 250); // threshold para binário
+    target_binary = toBinary(target_image, 250); // threshold para binário >250 branco menor preto
   }
 
   // Calcula o fitness de um indivíduo
@@ -27,7 +27,7 @@ class Evaluator {
     float overlap = getBinaryOverlap(target_binary, phenotype_binary);
 
     // Fitness final combina forma (RMSE) e penalização de pixels extras
-    return (1 - rmse) * overlap;
+    return (1 - rmse) * overlap; //rmse 0 a 1 e o overlap 0 a 1 logo o maximo que temos é 1*1
   }
 
   // Converte imagem para brilho médio RGB
@@ -48,11 +48,11 @@ class Evaluator {
     float[] weights = new float[image.pixels.length];
     for (int i = 0; i < image.pixels.length; i++) {
       int c = image.pixels[i];
-      int r = (c >> 16) & 0xFF;
+      int r = (c >> 16) & 0xFF; //Apanhar o vermelho mudando os pixeis e peguando os primeiros 8
       int g = (c >> 8) & 0xFF;
       int b = c & 0xFF;
       int brightness = (r + g + b) / 3;
-      weights[i] = map(255 - brightness, 0, 255, 1.0, 5.0);
+      weights[i] = map(255 - brightness, 0, 255, 1.0, 5.0); //escala o valor consuante quão brilhante é 255-5 0-1 e algo entre 0-255 fica entre 1-5
     }
     return weights;
   }
@@ -62,13 +62,13 @@ class Evaluator {
     float sum = 0;
     for (int i = 0; i < target.length; i++) {
       float diff = target[i] - phenotype[i];
-      sum += weight[i] * diff * diff;
+      sum += weight[i] * diff * diff; //Um erro em que está fora da linha vale mais
     }
     float rmse = sqrt(sum / target.length);
     return rmse / max_rmse;
   }
 
-  // Converte imagem para binário (linha = 1, fundo = 0)
+  // Converte imagem para binário (linha = 1 (preto), fundo = 0 (branco))
   int[] toBinary(PImage image, int threshold) {
     int[] binary = new int[image.pixels.length];
     for (int i = 0; i < image.pixels.length; i++) {

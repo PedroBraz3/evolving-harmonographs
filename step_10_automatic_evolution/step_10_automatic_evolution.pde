@@ -5,10 +5,10 @@ float crossover_rate = 0.5;
 float mutation_rate = 0.3;
 float individual_mutation_rate = 0.8;
 int resolution = 256;
-int SuperFormulaNumber=2;
+int SuperFormulaNumber=1;
 int max_generations = 2000;
 
-String path_target_image = "superformulas/2025-09-28-13-18-25.png";
+String path_target_image = "superformulas/FlorDesenho.png";
 
 PopulationInd pop;
 PVector[][] cells;

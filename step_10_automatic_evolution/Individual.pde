@@ -137,66 +137,66 @@ class Individual {
     }
     
     void renderPoints(PGraphics canvas, float cx, float cy, float w, float h) {
-  canvas.pushMatrix();
-  canvas.pushStyle();
+        canvas.pushMatrix();
+        canvas.pushStyle();
 
-  // move o sistema de coordenadas para o centro pedido
-  canvas.translate(cx, cy);
+        // move o sistema de coordenadas para o centro pedido
+        canvas.translate(cx, cy);
 
-  // podes ajustar strokeWeight aqui para que os pontos fiquem proporcionais
-  float sw = max(1, w * 0.01);
-  canvas.strokeWeight(sw);
-  canvas.stroke(0);
-  canvas.noFill();
+        // podes ajustar strokeWeight aqui para que os pontos fiquem proporcionais
+        float sw = max(1, w * 0.01);
+        canvas.strokeWeight(sw);
+        canvas.stroke(0);
+        canvas.noFill();
 
-  // delega para cada superformula
-  for (int i = 0; i < superformulas.length; i++) {
-    superformulas[i].renderPoints(canvas, 0, 0, w, h);
-  }
+        // delega para cada superformula
+        for (int i = 0; i < superformulas.length; i++) {
+            superformulas[i].renderPoints(canvas, 0, 0, w, h);
+        }
 
-  canvas.popStyle();
-  canvas.popMatrix();
-}
+        canvas.popStyle();
+        canvas.popMatrix();
+    }
 
     void export() {
-    // cria o nome único (ano-mês-dia-hora-minuto-segundo)
-    String output_filename = year() + "-" + nf(month(), 2) + "-" + nf(day(), 2) + "-" +
-        nf(hour(), 2) + "-" + nf(minute(), 2) + "-" + nf(second(), 2);
+        // cria o nome único (ano-mês-dia-hora-minuto-segundo)
+        String output_filename = year() + "-" + nf(month(), 2) + "-" + nf(day(), 2) + "-" +
+            nf(hour(), 2) + "-" + nf(minute(), 2) + "-" + nf(second(), 2);
 
-    String output_path = sketchPath("outputs/" + output_filename);
-    println("Exporting individual to: " + output_path);
+        String output_path = sketchPath("outputs/" + output_filename);
+        println("Exporting individual to: " + output_path);
 
-    // garante que a pasta "outputs" existe
-    File outDir = new File(sketchPath("outputs"));
-    if (!outDir.exists()) outDir.mkdirs();
+        // garante que a pasta "outputs" existe
+        File outDir = new File(sketchPath("outputs"));
+        if (!outDir.exists()) outDir.mkdirs();
 
-    // --- exporta imagem PNG ---
-    getPhenotype(2000).save(output_path + ".png");
+        // --- exporta imagem PNG ---
+        getPhenotype(2000).save(output_path + ".png");
 
-    // --- exporta PDF (vetorial) ---
-    PGraphics pdf = createGraphics(2000, 2000, PDF, output_path + ".pdf");
-    pdf.beginDraw();
-    pdf.noFill();
-    pdf.strokeWeight(pdf.height * 0.001);
-    pdf.stroke(0);
+        // --- exporta PDF (vetorial) ---
+        PGraphics pdf = createGraphics(2000, 2000, PDF, output_path + ".pdf");
+        pdf.beginDraw();
+        pdf.noFill();
+        pdf.strokeWeight(pdf.height * 0.001);
+        pdf.stroke(0);
 
-    pdf.pushMatrix();
-    pdf.translate(pdf.width / 2, pdf.height / 2);
-    for (int i = 0; i < superformulas.length; i++) {
-        superformulas[i].render(pdf, 0, 0, pdf.width, pdf.height);
-    }
-    pdf.popMatrix();
+        pdf.pushMatrix();
+        pdf.translate(pdf.width / 2, pdf.height / 2);
+        for (int i = 0; i < superformulas.length; i++) {
+            superformulas[i].render(pdf, 0, 0, pdf.width, pdf.height);
+        }
+        pdf.popMatrix();
 
-    pdf.dispose();
-    pdf.endDraw();
+        pdf.dispose();
+        pdf.endDraw();
 
-    // --- exporta genes (parâmetros) em txt ---
-    String[] output_text_lines = new String[superformulas.length];
-    for (int i = 0; i < superformulas.length; i++) {
-        output_text_lines[i] = superformulas[i].toString();
-    }
-    saveStrings(output_path + ".txt", output_text_lines);
+        // --- exporta genes (parâmetros) em txt ---
+        String[] output_text_lines = new String[superformulas.length];
+        for (int i = 0; i < superformulas.length; i++) {
+            output_text_lines[i] = superformulas[i].toString();
+        }
+        saveStrings(output_path + ".txt", output_text_lines);
 
-    println("✅ Export complete!");
+        println("✅ Export complete!");
     }
 }
