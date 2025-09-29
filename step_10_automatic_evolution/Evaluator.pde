@@ -93,7 +93,7 @@ class Evaluator {
               total_target++;
               if (phenotype_bin[i] == 1) hits += 1; // acerto
           } else {
-              if (phenotype_bin[i] == 1) extras += 0.1; // penalização leve
+              if (phenotype_bin[i] == 1) extras += 0.1; // 
           }
       }
 
