@@ -1,11 +1,11 @@
-class Evaluator {
+class EvaluatorA {
 
   PImage target_image;
   int[] target_pixels_brightness;
   int[] target_binary;
   float[] target_weight; // peso para cada pixel baseado na intensidade
 
-  Evaluator(PImage image, int resolution) {
+  EvaluatorA(PImage image, int resolution) {
     // Prepara a imagem alvo
     target_image = image.copy();
     target_image.resize(resolution, resolution);

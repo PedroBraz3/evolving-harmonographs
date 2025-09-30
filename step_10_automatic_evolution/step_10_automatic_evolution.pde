@@ -1,14 +1,14 @@
 int population_size = 50;
-int elite_size = 0;
+int elite_size = 2;
 int tournament_size = 2;
 float crossover_rate = 0.5;
 float mutation_rate = 0.3;
-float individual_mutation_rate = 0.8;
+float individual_mutation_rate = 1;
 int resolution = 256;
-int SuperFormulaNumber=1;
+int SuperFormulaNumber=2;
 int max_generations = 2000;
 
-String path_target_image = "superformulas/FlorDesenho.png";
+String path_target_image = "superformulas/2025-09-28-13-18-25.png";
 
 PopulationInd pop;
 PVector[][] cells;
@@ -21,6 +21,7 @@ void settings() {
 }
 
 void setup() {
+  randomSeed(42);
   int centerX = (displayWidth - width) / 2;
   int centerY = (displayHeight - height) / 2;
   surface.setLocation(centerX, centerY);

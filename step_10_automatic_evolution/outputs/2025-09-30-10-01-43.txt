@@ -1,0 +1,25 @@
+a-10.296101
+b-20.0
+n1-4.8638515 n2-0.5 n3-9.936007
+m-24.0
+a-19.278378
+b-8.334981
+n1-4.3038125 n2-3.1195865 n3-5.750946
+m-28.0
+int population_size = 50;
+int elite_size = 2;
+int tournament_size = 2;
+float crossover_rate = 0.5;
+float mutation_rate = 0.3;
+float individual_mutation_rate = 1;
+int resolution = 256;
+int SuperFormulaNumber=2;
+int max_generations = 2000;
+a-11.840047
+b-17.885777
+n1-9.935061 n2-1.0129713 n3-4.9151177
+m-24.0
+a-12.140578
+b-19.416162
+n1-8.545664 n2-4.6335735 n3-5.5556393
+m-28.0

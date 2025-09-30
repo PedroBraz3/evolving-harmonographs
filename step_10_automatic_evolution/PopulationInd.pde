@@ -5,11 +5,11 @@ class PopulationInd {
   
   Individual[] individuals; // Array to store the individuals in the population
   int generations; // Integer to keep count of how many generations have been created
-  Evaluator evaluator;
+  EvaluatorA evaluator;
   
   PopulationInd(PImage target) {
     individuals = new Individual[population_size];
-    evaluator = new Evaluator(target, resolution);
+    evaluator = new EvaluatorA(target, resolution);
     initialize();
   }
   
