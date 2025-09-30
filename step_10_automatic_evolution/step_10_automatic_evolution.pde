@@ -5,7 +5,7 @@ float crossover_rate = 0.5;
 float mutation_rate = 0.5;
 float individual_mutation_rate = 1;
 int resolution = 256;
-int SuperFormulaNumber=1;
+int SuperFormulaNumber=2;
 int max_generations = 2000;
 
 String path_target_image = "superformulas/2025-09-28-13-18-25.png";
