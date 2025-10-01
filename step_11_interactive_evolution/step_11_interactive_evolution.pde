@@ -10,13 +10,14 @@ int SuperFormulaNumber=2;
 PopulationInd pop;
 PVector[][] cells;
 Individual hovered_indiv = null;
-/*
+
 void settings() {
   size(int(displayWidth * 0.9), int(displayHeight * 0.8), P2D);
   smooth(8);
 }
 
 void setup() {
+  randomSeed(42);
   pop = new PopulationInd();
   cells = calculateGrid(population_size, 0, 0, width, height - 30, 30, 10, 30, true);
   textSize(constrain(cells[0][0].z * 0.15, 11, 14));
@@ -139,9 +140,9 @@ PVector[][] calculateGrid(int cells, float x, float y, float w, float h, float m
   }
   return positions;
 }
-*/
 
 
+/*
 Individual ind;
 
 /*
@@ -154,7 +155,7 @@ b-19.416162
 n1-8.545664 n2-4.6335735 n3-5.5556393
 m-28.0
 */
-
+/*
 void setup() {
     size(600, 600);
     ind = new Individual(new SuperFormula[]{new SuperFormula(11.840047, 17.885777,9.935061,1.0129713,4.9151177, 24),new SuperFormula(12.140578, 19.416162,8.545664,4.6335735,5.5556393, 28)});
@@ -173,4 +174,4 @@ void keyReleased() {
             redraw();
             println(ind);
         }    
-}
+}*/
