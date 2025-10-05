@@ -1,24 +1,29 @@
 import java.util.*; // Needed to sort arrays
 
-// This class stores and manages a population of individuals (harmonographs).
+/**
+ * PopulationInd class manages a population of harmonograph individuals for automatic evolution.
+ * Uses EvaluatorA for fitness calculation based on target image similarity.
+ */
 class PopulationInd {
   
-  Individual[] individuals; // Array to store the individuals in the population
-  int generations; // Integer to keep count of how many generations have been created
-  EvaluatorA evaluator;
+  Individual[] individuals;  // Array to store the individuals in the population
+  int generations;          // Integer to keep count of how many generations have been created
+  EvaluatorA evaluator;     // Evaluator for automatic fitness calculation
   
+  // Constructor with target image for automatic evaluation
   PopulationInd(PImage target) {
     individuals = new Individual[population_size];
     evaluator = new EvaluatorA(target, resolution);
     initialize();
   }
   
-  // Create the initial individuals
+  // Create the initial individuals with automatic fitness evaluation
   void initialize() {
     // Fill population with random individuals
     for (int i = 0; i < individuals.length; i++) {
       individuals[i] = new Individual();
-      float fitness = evaluator.calculateFitness(individuals[i])*9+1;
+      // Calculate fitness using evaluator (scaled 1-10 for roulette selection)
+      float fitness = evaluator.calculateFitness(individuals[i]) * 9 + 1;
       individuals[i].setFitness(fitness);
     }
     
@@ -27,9 +32,9 @@ class PopulationInd {
     sortIndividualsByFitness();
   }
   
-  // Create the next generation
+  // Create the next generation using genetic operators
   void evolve() {
-    // Create a new a array to store the individuals that will be in the next generation
+    // Create new generation array
     Individual[] new_generation = new Individual[individuals.length];
     
     // Sort individuals by fitness
@@ -38,19 +43,21 @@ class PopulationInd {
     // Count number of individuals with fitness score
     int eliteSizeAdjusted = min(elite_size, getPreferredIndivsShuffled().size());
     
-    // Copy the elite to the next generation
+    // Copy the elite to the next generation (elitism)
     for (int i = 0; i < eliteSizeAdjusted; i++) {
       new_generation[i] = individuals[i].getCopy();
     }
     
-    // Create (breed) new individuals with crossover
+    // Create new individuals with crossover or reproduction
     for (int i = eliteSizeAdjusted; i < population_size; i += 2) {
       Individual[] newIndivs;
       if (random(1) < crossover_rate) {
+        // Perform crossover between two parents
         Individual parent1 = selectByRoulette();
         Individual parent2 = selectByRoulette();
         newIndivs = parent1.OnePointFlexibleCrossover(parent2);
       } else {
+        // Simple reproduction (copy parents)
         newIndivs = new Individual[]{selectByRoulette().getCopy(), selectByRoulette().getCopy()};
       }
       new_generation[i] = newIndivs[0];
@@ -59,25 +66,28 @@ class PopulationInd {
       }
     }
     
-    // Mutate new individuals
+    // Apply mutation to new individuals
     for (int i = eliteSizeAdjusted; i < new_generation.length; i++) {
        new_generation[i].mutate();
     }
     
-    // Replace the individuals in the population with the new generation individuals
+    // Replace the individuals in the population with the new generation
     for (int i = 0; i < individuals.length; i++) {
       individuals[i] = new_generation[i];
     }
     
+    // Calculate fitness for new individuals (excluding elite)
     for (int i = eliteSizeAdjusted; i < new_generation.length; i++) {
-      float fitness = evaluator.calculateFitness(new_generation[i])*9+1;
+      float fitness = evaluator.calculateFitness(new_generation[i]) * 9 + 1;
       new_generation[i].setFitness(fitness);
     }
     sortIndividualsByFitness();
+    
     // Increment the number of generations
     generations++;
   }
 
+  // Roulette wheel selection - probability proportional to fitness
   Individual selectByRoulette() {
         float totalFitness = 0;
         for (int i = 0; i < individuals.length; i++) {
@@ -92,7 +102,7 @@ class PopulationInd {
                 return individuals[i];
             }
         }
-        // fallback, caso algo dê errado
+        // Fallback in case something goes wrong
         return individuals[individuals.length-1];
     }
   
@@ -167,7 +177,7 @@ class PopulationInd {
     });
   }
   
-  // Get an individual from the popultioon located at the given index
+  // Get an individual from the population located at the given index
   Individual getIndiv(int index) {
     return individuals[index];
   }
