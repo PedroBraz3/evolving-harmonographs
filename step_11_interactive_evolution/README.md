@@ -1,96 +1,84 @@
-# Interactive Evolution of Harmonographs
+# Evolução Interativa de Harmonógrafos
 
-This module demonstrates the use of an **Interactive Genetic Algorithm** to evolve harmonograph drawings, where users manually assign fitness to the drawings being evolved. This approach allows for subjective aesthetic evaluation and creative exploration of the design space.
+Este módulo demonstra a utilização de um **Algoritmo Genético Interativo** para evoluir desenhos da SuperFórmula, onde os utilizadores atribuem manualmente a **aptidão** (fitness) aos desenhos que estão a evoluir. Esta abordagem permite uma avaliação estética subjetiva e a exploração criativa do espaço de design.  
 
-![](../images/interactive-evolution.gif)
-*Population of harmonographs being manually evaluated and evolved*
+## Principais Funcionalidades
 
-## Key Features
+- **Evolução Guiada pelo Utilizador**: Atribuição manual de fitness através da interação com o rato e teclado  
+- **Feedback em Tempo Real**: Destaque visual dos indivíduos avaliados  
+- **Avaliação Flexível**: Múltiplas formas de atribuir valores de fitness (clique, setas do teclado)  
+- **Exploração Criativa**: Sem restrições de alvo, permitindo uma evolução estética aberta  
+- **Capacidades de Exportação**: Guardar indivíduos interessantes em múltiplos formatos  
 
-- **User-Driven Evolution**: Manual fitness assignment through mouse and keyboard interaction
-- **Real-Time Feedback**: Visual highlighting of evaluated individuals
-- **Flexible Evaluation**: Multiple ways to assign fitness values (click, arrow keys)
-- **Creative Exploration**: No target constraints, allowing for open-ended aesthetic evolution
-- **Export Capabilities**: Save interesting individuals in multiple formats
+## Arquitetura
 
-## Architecture
+### Classes Principais
 
-### Core Classes
+- **`Individual`**: Representa um array com múltiplos componentes da SuperFórmula  
+- **`PopulationInd`**: Gere a evolução da população com atribuição de fitness guiada pelo utilizador  
+- **`SuperFormula`**: Implementa a geração de curvas paramétricas usando a equação da superfórmula  
+- **Interface Interativa**: Controlo por rato e teclado para atribuição de fitness  
 
-- **`Individual`**: Represents a harmonograph with multiple SuperFormula components
-- **`PopulationInd`**: Manages population evolution with user-driven fitness assignment
-- **`SuperFormula`**: Implements parametric curve generation using superformula equation
-- **Interactive Interface**: Mouse and keyboard controls for fitness assignment
+### Processo de Evolução
 
-### Evolution Process
+1. **Inicialização**: Cria uma população aleatória com valores de fitness por defeito  
+2. **Avaliação pelo Utilizador**: Atribuição manual de fitness através da interação  
+3. **Seleção**: Seleção por roleta baseada na fitness atribuída pelo utilizador  
+4. **Cruzamento**: OnePointFlexibleCrossover com direção configurável  
+5. **Mutação**: Mutação controlada de parâmetros dentro de intervalos válidos  
+6. **Geração**: Criação de nova população com base nas preferências do utilizador  
 
-1. **Initialization**: Creates random population with default fitness values
-2. **User Evaluation**: Manual fitness assignment through interaction
-3. **Selection**: Roulette wheel selection based on user-assigned fitness
-4. **Crossover**: OnePointFlexibleCrossover with configurable direction
-5. **Mutation**: Controlled parameter mutation within valid ranges
-6. **Generation**: Creates new population based on user preferences
+## Parâmetros
 
-## Parameters
+- **Tamanho da População**: 10 indivíduos (menor para avaliação mais manejável)  
+- **Tamanho da Elite**: 0 (desativado para avaliação interativa)  
+- **Taxa de Cruzamento**: 0.5 (50% de probabilidade de cruzamento)  
+- **Taxa de Mutação**: 0.3 (30% de probabilidade de mutação do indivíduo)  
+- **Taxa de Mutação do Gene**: 0.5 (50% de probabilidade de mutação de cada gene)  
+- **Resolução**: 256x256 pixels para renderização do fenótipo  
 
-- **Population Size**: 10 individuals (smaller for manageable evaluation)
-- **Elite Size**: 0 (disabled for interactive evaluation)
-- **Crossover Rate**: 0.5 (50% chance of crossover)
-- **Mutation Rate**: 0.3 (30% chance of individual mutation)
-- **Individual Mutation Rate**: 0.5 (50% chance of gene mutation)
-- **Resolution**: 256x256 pixels for phenotype rendering
+## Controlo
 
-## Controls
+Os utilizadores podem interagir com o programa usando os seguintes controlos:  
 
-Users can interact with the program using the following controls:
+### Interação com o Rato
+- **Clique num indivíduo**: Alterna a fitness entre alta (10) e baixa (1)  
+- **Passar o cursor**: Destaque visual do indivíduo sob o cursor  
 
-### Mouse Interaction
-- **Click on individual**: Toggle fitness between high (10) and low (1) values
-- **Hover**: Visual highlighting of individual under cursor
+### Controlo por Teclado
+- **Setas** (enquanto o cursor estiver sobre o indivíduo):  
+  - `↑`: Aumentar fitness (máx. 10)  
+  - `↓`: Diminuir fitness (mín. 1)  
+  - `→`: Definir fitness mínima (1)  
+  - `←`: Definir fitness nula (0)  
+- **`Enter` ou `Espaço`**: Evoluir para a próxima geração  
+- **`r`**: Reiniciar a população com novos indivíduos aleatórios  
+- **`e`**: Exportar o indivíduo atualmente sob o cursor  
 
-### Keyboard Controls
-- **Arrow Keys** (while hovering over individual):
-  - `↑`: Increase fitness (max 10)
-  - `↓`: Decrease fitness (min 1)
-  - `→`: Set to minimum fitness (1)
-  - `←`: Set to no fitness (0)
-- **`Enter` or `Space`**: Evolve to next generation
-- **`r`**: Reset population with new random individuals
-- **`e`**: Export currently hovered individual
+## Feedback Visual
+ 
+- **Exibição da Fitness**: Valores numéricos de fitness mostrados abaixo de cada indivíduo  
+- **Instruções de Controlo**: Texto de ajuda no ecrã na parte inferior da janela  
 
-## Visual Feedback
+## Funcionalidade de Exportação
 
-- **Hovered Individual**: Thin black border around individual under cursor
-- **Evaluated Individuals**: Thick black border around individuals with fitness > 0
-- **Fitness Display**: Numeric fitness values shown below each individual
-- **Control Instructions**: On-screen help text at bottom of window
+Os indivíduos podem ser exportados em múltiplos formatos:  
+- **PNG**: Imagem raster de alta resolução (2000x2000)  
+- **PDF**: Formato vectorial para gráficos escaláveis  
+- **TXT**: Valores de parâmetros para reprodução  
 
-## Export Functionality
+## Benefícios da Evolução Interativa
 
-Individuals can be exported in multiple formats:
-- **PNG**: High-resolution raster image (2000x2000)
-- **PDF**: Vector format for scalable graphics
-- **TXT**: Parameter values for reproduction
+- **Avaliação Subjetiva**: Os utilizadores podem avaliar com base em preferências estéticas  
+- **Descoberta Criativa**: Sem restrições de alvo, permitindo resultados inesperados  
+- **Controlo em Tempo Real**: Feedback e ajustes imediatos  
+- **Exploração**: Os utilizadores podem guiar a evolução em direções interessantes  
 
-## Interactive Evolution Benefits
+## Desafios
 
-- **Subjective Evaluation**: Users can evaluate based on aesthetic preferences
-- **Creative Discovery**: No target constraints allow for unexpected results
-- **Real-Time Control**: Immediate feedback and adjustment capabilities
-- **Exploration**: Users can guide evolution toward interesting directions
+- **Fadiga do Utilizador**: A avaliação manual pode tornar-se cansativa com populações grandes  
+- **Consistência**: A avaliação do utilizador pode variar ao longo do tempo  
+- **Escalabilidade**: Limitado a populações pequenas devido ao overhead de avaliação  
+- **Abordagens Híbridas**: Combinar métodos automáticos e interativos de avaliação  
+- **Interface de Utilizador**: Melhorar o design da interação para melhor experiência  
 
-## Challenges
-
-- **User Fatigue**: Manual evaluation can become tedious with large populations
-- **Consistency**: User evaluation may be inconsistent over time
-- **Scalability**: Limited to small populations due to evaluation overhead
-- **Hybrid Approaches**: Combine automatic and interactive evaluation methods
-- **User Interface**: Improve interaction design for better user experience
-
-## Future Enhancements
-
-- Implement user preference learning algorithms
-- Add collaborative evaluation features
-- Create aesthetic preference profiles
-- Develop hybrid automatic/interactive evaluation
-- Add real-time parameter adjustment controls

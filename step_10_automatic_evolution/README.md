@@ -1,74 +1,66 @@
-# Automatic Evolution of Harmonographs
+# Evolução Automática de Harmonógrafos
 
-This module demonstrates the automatic evolution of harmonograph drawings using a fitness function that evaluates individuals based on their visual similarity to a preset target image. The system uses SuperFormula-based individuals composed of multiple parametric curves that evolve to match a target shape.
+Este módulo demonstra a evolução automática de desenhos de harmonógrafos usando uma função de aptidão (fitness) que avalia os indivíduos com base na sua semelhança visual com uma imagem-alvo predefinida. O sistema utiliza indivíduos baseados na SuperFórmula, compostos por múltiplas curvas paramétricas que evoluem para corresponder à forma-alvo.
 
-![](../images/automatic-evolution.gif)
-*Population of harmonographs being evolved to resemble the target image*
 
-## Key Features
+## Principais Funcionalidades
 
-- **Automatic Fitness Evaluation**: Uses `EvaluatorA` class to compare rendered phenotypes with target images
-- **SuperFormula Individuals**: Each individual contains multiple SuperFormula components
-- **Advanced Evaluation Metrics**: Combines weighted RMSE and binary overlap with penalty for extra pixels
-- **Elitism and Roulette Selection**: Preserves best individuals and uses fitness-proportional selection
-- **Flexible Crossover**: OnePointFlexibleCrossover with forward/backward direction selection
-- **Controlled Mutation**: Parameter-specific mutation rates with valid range constraints
+- **Avaliação Automática de Fitness**: Utiliza a classe `EvaluatorA` para comparar os fenótipos renderizados com imagens-alvo  
+- **Indivíduos SuperFórmula**: Cada indivíduo contém múltiplos componentes da SuperFórmula  
+- **Métricas de Avaliação Avançadas**: Combina RMSE ponderado e sobreposição binária com penalização para pixels extra  
+- **Elitismo e Seleção por Roleta**: Preserva os melhores indivíduos e usa seleção proporcional à fitness  
+- **Cruzamento Flexível**: OnePointFlexibleCrossover com seleção de direção para frente/atrás  
+- **Mutação Controlada**: Taxas de mutação específicas por parâmetro com restrições de intervalo válidas  
 
-## Architecture
+## Arquitetura
 
-### Core Classes
+### Classes Principais
 
-- **`Individual`**: Represents a harmonograph with multiple SuperFormula components
-- **`PopulationInd`**: Manages population evolution with automatic fitness evaluation
-- **`SuperFormula`**: Implements parametric curve generation using superformula equation
-- **`EvaluatorA`**: Provides automatic fitness calculation based on target image similarity
+- **`Individual`**: Representa um harmonógrafo com múltiplos componentes da SuperFórmula  
+- **`PopulationInd`**: Gere a evolução da população com avaliação automática de fitness  
+- **`SuperFormula`**: Implementa a geração de curvas paramétricas usando a equação da SuperFórmula  
+- **`EvaluatorA`**: Fornece cálculo automático de fitness com base na semelhança com a imagem-alvo  
 
-### Evolution Process
+### Processo de Evolução
 
-1. **Initialization**: Creates random population and evaluates fitness automatically
-2. **Selection**: Uses roulette wheel selection based on fitness scores
-3. **Crossover**: OnePointFlexibleCrossover with configurable direction
-4. **Mutation**: Controlled parameter mutation within valid ranges
-5. **Elitism**: Preserves best individuals across generations
-6. **Evaluation**: Automatic fitness calculation using weighted RMSE and binary overlap
+1. **Inicialização**: Cria uma população aleatória e avalia automaticamente a fitness  
+2. **Seleção**: Usa seleção por roleta baseada nos valores de fitness  
+3. **Cruzamento**: OnePointFlexibleCrossover com direção configurável  
+4. **Mutação**: Mutação controlada de parâmetros dentro de intervalos válidos  
+5. **Elitismo**: Preserva os melhores indivíduos entre gerações  
+6. **Avaliação**: Cálculo automático de fitness usando RMSE ponderado e sobreposição binária  
 
-## Parameters
+## Parâmetros
 
-- **Population Size**: 50 individuals
-- **Elite Size**: 2 (best individuals preserved)
-- **Crossover Rate**: 0.5 (50% chance of crossover)
-- **Mutation Rate**: 0.3 (30% chance of individual mutation)
-- **Individual Mutation Rate**: 1.0 (100% chance of gene mutation)
-- **Max Generations**: 2000
-- **Resolution**: 256x256 pixels for phenotype rendering
+- **Tamanho da População**: 50 indivíduos  
+- **Tamanho da Elite**: 2 (melhores indivíduos preservados)  
+- **Taxa de Cruzamento**: 0.5 (50% de probabilidade de cruzamento)  
+- **Taxa de Mutação**: 0.3 (30% de probabilidade de mutação do indivíduo)  
+- **Taxa de Mutação do Gene**: 1.0 (100% de probabilidade de mutação de cada gene)  
+- **Máx. Gerações**: 2000  
+- **Resolução**: 256x256 pixels para renderização do fenótipo  
 
-## Controls
+## Controlo
 
-Users can interact with the program using the following controls:
+Os utilizadores podem interagir com o programa usando os seguintes controlos:
 
-- Press key `p` to toggle between phenotype and genotype display modes
-- Press key `f` to toggle the visibility of fitness values
-- Press key `e` to export the best individual to file (PNG, PDF, TXT formats)
+- Pressionar `p` para alternar entre modos de visualização de fenótipo e genótipo  
+- Pressionar `f` para alternar a visibilidade dos valores de fitness  
+- Pressionar `e` para exportar o melhor indivíduo para ficheiro (formatos PNG, PDF, TXT)  
 
-## Fitness Evaluation
+## Avaliação de Fitness
 
-The `EvaluatorA` class implements a sophisticated fitness function that:
+A classe `EvaluatorA` implementa uma função de fitness sofisticada que:
 
-1. **Weighted RMSE**: Compares pixel brightness with higher weights for darker target pixels
-2. **Binary Overlap**: Measures shape similarity with penalty for extra pixels
-3. **Combined Score**: `(1 - rmse) * overlap` for final fitness value
+1. **RMSE Ponderado**: Compara o brilho dos pixels com maior peso para pixels mais escuros da imagem-alvo  
+2. **Sobreposição Binária**: Mede a semelhança da forma com penalização para pixels extra  
+3. **Pontuação Combinada**: `(1 - rmse) * overlap` para o valor final de fitness  
 
-## Export Functionality
+## Funcionalidade de Exportação
 
-Individuals can be exported in multiple formats:
-- **PNG**: High-resolution raster image (2000x2000)
-- **PDF**: Vector format for scalable graphics
-- **TXT**: Parameter values for reproduction
+Os indivíduos podem ser exportados em múltiplos formatos:  
+- **PNG**: Imagem raster de alta resolução (2000x2000)  
+- **PDF**: Formato vetorial para gráficos escaláveis  
+- **TXT**: Valores de parâmetros para reprodução  
 
-## Challenges
 
-- Implement adaptive mutation rates based on population diversity
-- Add automatic export when fitness plateaus
-- Implement multiple target image support
-- Add real-time fitness visualization
-- Implement parameter sensitivity analysis
