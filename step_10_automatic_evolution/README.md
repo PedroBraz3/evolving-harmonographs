@@ -16,7 +16,7 @@ Este módulo demonstra a evolução automática de desenhos de harmonógrafos us
 
 ### Classes Principais
 
-- **`Individual`**: Representa um harmonógrafo com múltiplos componentes da SuperFórmula  
+- **`Individual`**: Representa um array de SuperFórmulas  
 - **`PopulationInd`**: Gere a evolução da população com avaliação automática de fitness  
 - **`SuperFormula`**: Implementa a geração de curvas paramétricas usando a equação da SuperFórmula  
 - **`EvaluatorA`**: Fornece cálculo automático de fitness com base na semelhança com a imagem-alvo  
